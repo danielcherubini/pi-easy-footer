@@ -1,6 +1,6 @@
 {
-  "name": "pi-deck",
-  "version": "0.1.7",
+  "name": "@haispeed/pi-deck",
+  "version": "0.1.0",
   "description": "A custom two-line footer extension for pi",
   "type": "module",
   "files": [

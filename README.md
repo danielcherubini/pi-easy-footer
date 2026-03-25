@@ -5,7 +5,7 @@ A custom two-line footer extension for [pi](https://github.com/badlogic/pi-mono/
 ## Install
 
 ```bash
-pi install npm:pi-deck
+pi install npm:@haispeed/pi-deck
 ```
 
 ## What it shows
