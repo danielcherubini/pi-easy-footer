@@ -2,6 +2,12 @@
 
 A custom two-line footer extension for [pi](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent).
 
+## Install
+
+```bash
+pi install npm:pi-deck
+```
+
 ## What it shows
 
 **Line 1**
@@ -15,28 +21,18 @@ A custom two-line footer extension for [pi](https://github.com/badlogic/pi-mono/
 **Line 2**
 - Token stats: `↑input ↓output R cache-read W cache-write $cost context%/window` (right-aligned)
 
-## Install
-
-```bash
-pi install /Users/hai/Code/pi-footer
-```
-
-Or point to it in `~/.pi/agent/settings.json`:
-
-```json
-{
-  "packages": ["/Users/hai/Code/pi-footer"]
-}
-```
-
 ## Icons
 
-Uses Nerd Font icons. Requires a Nerd Font in your terminal.
+Requires a [Nerd Font](https://www.nerdfonts.com/) in your terminal.
 
-| Part       | Icon     | Codepoint  |
-|------------|----------|------------|
-| Model      | `󾍏`     | `\uee0d`   |
-| Directory  | ``      | `\uf4d3`   |
-| Branch     | ``      | `\uf126`   |
-| Worktree   | ``      | `\uf1bb`   |
-| Context    | ``      | `\uf2db`   |
+| Part       | Codepoint  |
+|------------|------------|
+| Model      | `\uee0d`   |
+| Directory  | `\uf4d3`   |
+| Branch     | `\uf126`   |
+| Worktree   | `\uf1bb`   |
+| Context    | `\uf2db`   |
+
+## License
+
+[MIT](LICENSE)

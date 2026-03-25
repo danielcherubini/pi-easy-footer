@@ -1,7 +1,7 @@
 {
   "name": "pi-deck",
   "version": "0.1.0",
-  "description": "A custom footer extension for pi",
+  "description": "A custom two-line footer extension for pi",
   "type": "module",
   "files": [
     "extensions",
@@ -17,8 +17,19 @@
   ],
   "author": "hai",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hai/pi-deck.git"
+  },
+  "homepage": "https://github.com/hai/pi-deck#readme",
+  "bugs": {
+    "url": "https://github.com/hai/pi-deck/issues"
+  },
   "engines": {
     "node": ">=24.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "peerDependencies": {
     "@mariozechner/pi-ai": "*",
