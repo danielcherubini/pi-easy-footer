@@ -1,0 +1,33 @@
+{
+  "name": "pi-footer",
+  "version": "0.1.0",
+  "description": "A custom footer extension for pi",
+  "type": "module",
+  "files": [
+    "extensions",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "pi-package",
+    "pi",
+    "pi-extension",
+    "footer",
+    "statusline"
+  ],
+  "author": "hai",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "peerDependencies": {
+    "@mariozechner/pi-ai": "*",
+    "@mariozechner/pi-coding-agent": "*",
+    "@mariozechner/pi-tui": "*"
+  },
+  "pi": {
+    "extensions": [
+      "./extensions/footer.ts"
+    ]
+  }
+}
