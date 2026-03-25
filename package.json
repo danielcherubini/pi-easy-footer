@@ -1,6 +1,6 @@
 {
   "name": "pi-deck",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A custom two-line footer extension for pi",
   "type": "module",
   "files": [
