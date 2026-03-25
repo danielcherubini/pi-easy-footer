@@ -7,6 +7,7 @@
 import type { AssistantMessage } from "@mariozechner/pi-ai";
 import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import { execSync } from "child_process";
+import { realpathSync } from "fs";
 import { truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
 
 function formatTokens(count: number): string {
@@ -31,7 +32,7 @@ export default function (pi: ExtensionAPI) {
           const mint = (s: string) => "\x1b[38;2;110;180;165m" + s + reset;
           const green = (s: string) => "\x1b[38;2;120;165;110m" + s + reset;
           const pink = (s: string) => "\x1b[38;2;190;120;145m" + s + reset;
-          const purple = (s: string) => "\x1b[38;2;200;165;90m" + s + reset;
+          const amber = (s: string) => "\x1b[38;2;200;165;90m" + s + reset;
           const slate = (s: string) => "\x1b[38;2;120;135;160m" + s + reset;
 
           // Nerd Font icons
@@ -56,7 +57,7 @@ export default function (pi: ExtensionAPI) {
             });
             const worktrees = result.trim().split("\n\n").filter(Boolean);
             if (worktrees.length > 1) {
-              const currentPath = process.cwd();
+              const currentPath = realpathSync(process.cwd());
               for (const wt of worktrees) {
                 const lines = wt.split("\n");
                 const pathLine = lines.find((l) => l.startsWith("worktree "));
@@ -151,7 +152,7 @@ export default function (pi: ExtensionAPI) {
             mint(" " + iconModel + " " + model),
             green(iconDir + " " + cwd),
             branch ? pink(iconBranch + " " + branch) : "",
-            worktree ? purple(iconWorktree + " " + worktree) : "",
+            worktree ? amber(iconWorktree + " " + worktree) : "",
           ].filter(Boolean);
 
           const sep = theme.fg("dim", " | ");
