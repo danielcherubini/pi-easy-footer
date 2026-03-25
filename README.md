@@ -1,4 +1,4 @@
-# pi-footer
+# pi-deck
 
 A custom two-line footer extension for [pi](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent).
 
