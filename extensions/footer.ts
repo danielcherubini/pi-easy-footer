@@ -38,7 +38,7 @@ export default function (pi: ExtensionAPI) {
           const iconModel = "\uee0d ";
           const iconDir = "\uf4d3 ";
           const iconBranch = "\uf126";
-          const iconWorktree = "\uf0405";
+          const iconWorktree = "\u{f0405}";
           const iconContext = "\uf2db";
 
           // Data
@@ -61,9 +61,10 @@ export default function (pi: ExtensionAPI) {
                 const lines = wt.split("\n");
                 const pathLine = lines.find((l) => l.startsWith("worktree "));
                 const branchLine = lines.find((l) => l.startsWith("branch "));
+                const wtPath = pathLine?.replace("worktree ", "");
                 if (
-                  pathLine &&
-                  pathLine.replace("worktree ", "") === currentPath
+                  wtPath &&
+                  (currentPath === wtPath || currentPath.startsWith(wtPath + "/"))
                 ) {
                   if (branchLine)
                     worktree = branchLine.replace("branch refs/heads/", "");
