@@ -1,6 +1,6 @@
 # pi-deck
 
-A custom two-line footer extension for [pi](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent).
+A custom two-line footer extension for [pi](https://github.com/badlogic/pi-mono/tree/main/packages/coding-agent). · [GitHub](https://github.com/hisea/pi-deck)
 
 ## Install
 

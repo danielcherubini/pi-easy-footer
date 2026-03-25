@@ -19,11 +19,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hai/pi-deck.git"
+    "url": "git+https://github.com/hisea/pi-deck.git"
   },
-  "homepage": "https://github.com/hai/pi-deck#readme",
+  "homepage": "https://github.com/hisea/pi-deck#readme",
   "bugs": {
-    "url": "https://github.com/hai/pi-deck/issues"
+    "url": "https://github.com/hisea/pi-deck/issues"
   },
   "engines": {
     "node": ">=24.0.0"
