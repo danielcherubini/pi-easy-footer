@@ -38,7 +38,7 @@ export default function (pi: ExtensionAPI) {
           const iconModel = "\uee0d ";
           const iconDir = "\uf4d3 ";
           const iconBranch = "\uf126";
-          const iconWorktree = "\uf1bb";
+          const iconWorktree = "\uf0405";
           const iconContext = "\uf2db";
 
           // Data
