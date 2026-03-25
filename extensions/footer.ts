@@ -31,7 +31,7 @@ export default function (pi: ExtensionAPI) {
           const mint = (s: string) => "\x1b[38;2;110;180;165m" + s + reset;
           const green = (s: string) => "\x1b[38;2;120;165;110m" + s + reset;
           const pink = (s: string) => "\x1b[38;2;190;120;145m" + s + reset;
-          const purple = (s: string) => "\x1b[38;2;155;120;190m" + s + reset;
+          const purple = (s: string) => "\x1b[38;2;200;165;90m" + s + reset;
           const slate = (s: string) => "\x1b[38;2;120;135;160m" + s + reset;
 
           // Nerd Font icons
