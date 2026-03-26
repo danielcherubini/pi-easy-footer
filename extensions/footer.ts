@@ -27,13 +27,8 @@ export default function (pi: ExtensionAPI) {
         dispose: unsub,
         invalidate() {},
         render(width: number): string[] {
-          // ANSI helpers
-          const reset = "\x1b[0m";
-          const mint = (s: string) => "\x1b[38;2;110;180;165m" + s + reset;
-          const green = (s: string) => "\x1b[38;2;120;165;110m" + s + reset;
-          const pink = (s: string) => "\x1b[38;2;190;120;145m" + s + reset;
-          const amber = (s: string) => "\x1b[38;2;200;165;90m" + s + reset;
-          const slate = (s: string) => "\x1b[38;2;120;135;160m" + s + reset;
+          // Theme-color helper
+          const c = (token: string, s: string) => theme.fg(token, s);
 
           // Nerd Font icons
           const iconModel = "\uee0d ";
@@ -119,16 +114,13 @@ export default function (pi: ExtensionAPI) {
             const barWidth = 12;
             const filled = Math.round(pct * barWidth);
             const bar = "━".repeat(filled) + "─".repeat(barWidth - filled);
-            const barColor =
-              pct >= 0.9
-                ? (s: string) => "\x1b[38;2;190;120;145m" + s + reset
-                : pct >= 0.7
-                  ? (s: string) => "\x1b[38;2;155;120;190m" + s + reset
-                  : (s: string) => "\x1b[38;2;100;175;175m" + s + reset;
+            const barToken =
+              pct >= 0.9 ? "error" : pct >= 0.7 ? "warning" : "syntaxString";
+            const contextFrameToken = "syntaxString";
             contextBar =
-              slate(iconContext + " [") +
-              barColor(bar) +
-              slate("] " + Math.round(contextPctVal) + "%");
+              c(contextFrameToken, iconContext + " ") +
+              c(barToken, bar) +
+              c(contextFrameToken, " " + Math.round(contextPctVal) + "%");
           }
 
           // Thinking display
@@ -149,10 +141,10 @@ export default function (pi: ExtensionAPI) {
               : "";
 
           const leftParts = [
-            mint(" " + iconModel + " " + model),
-            green(iconDir + " " + cwd),
-            branch ? pink(iconBranch + " " + branch) : "",
-            worktree ? amber(iconWorktree + " " + worktree) : "",
+            c("syntaxType", " " + iconModel + " " + model),
+            c("syntaxFunction", iconDir + " " + cwd),
+            branch ? c("success", iconBranch + " " + branch) : "",
+            worktree ? c("syntaxNumber", iconWorktree + " " + worktree) : "",
           ].filter(Boolean);
 
           const sep = theme.fg("dim", " | ");

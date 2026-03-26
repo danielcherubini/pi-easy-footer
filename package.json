@@ -5,6 +5,7 @@
   "type": "module",
   "files": [
     "extensions",
+    "themes",
     "README.md",
     "LICENSE"
   ],
@@ -12,8 +13,11 @@
     "pi-package",
     "pi",
     "pi-extension",
+    "pi-theme",
     "footer",
-    "statusline"
+    "statusline",
+    "kanagawa",
+    "kanso"
   ],
   "author": "hai",
   "license": "MIT",
@@ -39,6 +43,9 @@
   "pi": {
     "extensions": [
       "./extensions/footer.ts"
+    ],
+    "themes": [
+      "./themes"
     ]
   }
 }

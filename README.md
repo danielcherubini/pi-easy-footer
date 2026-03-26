@@ -33,6 +33,27 @@ Requires a [Nerd Font](https://www.nerdfonts.com/) in your terminal.
 | Worktree   | `\uf1bb`   |
 | Context    | `\uf2db`   |
 
+## Themes
+
+This package includes:
+
+### Kanagawa
+- `kanagawa-wave`
+- `kanagawa-dragon`
+- `kanagawa-lotus`
+
+Palette source: [rebelot/kanagawa.nvim](https://github.com/rebelot/kanagawa.nvim/blob/master/lua/kanagawa/colors.lua)
+
+### Kanso
+- `kanso-ink`
+- `kanso-zen`
+- `kanso-mist`
+- `kanso-pearl`
+
+Palette source: [webhooked/kanso.nvim](https://github.com/webhooked/kanso.nvim/blob/main/lua/kanso/colors.lua)
+
+After install, pick a theme in `pi` via `/settings` → `theme`.
+
 ## License
 
 [MIT](LICENSE)
