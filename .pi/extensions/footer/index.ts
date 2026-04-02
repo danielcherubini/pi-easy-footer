@@ -60,7 +60,8 @@ export default function (pi: ExtensionAPI) {
                 const wtPath = pathLine?.replace("worktree ", "");
                 if (
                   wtPath &&
-                  (currentPath === wtPath || currentPath.startsWith(wtPath + "/"))
+                  (currentPath === wtPath ||
+                    currentPath.startsWith(wtPath + "/"))
                 ) {
                   if (branchLine)
                     worktree = branchLine.replace("branch refs/heads/", "");
