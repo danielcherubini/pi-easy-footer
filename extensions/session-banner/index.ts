@@ -1,4 +1,5 @@
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
+import { truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
 
 type BannerColor = "text" | "accent" | "muted" | "dim" | "success" | "warning" | "error" | "mdLink" | "syntaxType";
 
@@ -148,12 +149,21 @@ function setSessionBanner(pi: ExtensionAPI, ctx: ExtensionContext): void {
 
   ctx.ui.setWidget("session-banner", (_tui, theme) => ({
     render(width: number): string[] {
-      const plainLine = "─".repeat(Math.max(0, width));
+      if (width <= 0) return [];
+
+      const plainLine = "─".repeat(width);
       const line = theme.fg(BANNER_CONFIG.frameColor, plainLine);
+
+      const emojiRaw = pickEmojiFromTitle(title);
+      const prefixRaw = ` ${emojiRaw} │ `;
+      const availableTitleWidth = Math.max(0, width - visibleWidth(prefixRaw));
+      const safeTitle = truncateToWidth(title, availableTitleWidth);
+
+      const emoji = theme.fg(BANNER_CONFIG.frameColor, emojiRaw);
       const divider = theme.fg(BANNER_CONFIG.frameColor, "│");
-      const emoji = theme.fg(BANNER_CONFIG.frameColor, pickEmojiFromTitle(title));
-      const titleText = theme.fg(BANNER_CONFIG.titleColor, title);
-      const middle = ` ${emoji} ${divider} ${titleText}`;
+      const titleText = theme.fg(BANNER_CONFIG.titleColor, safeTitle);
+      const middle = truncateToWidth(` ${emoji} ${divider} ${titleText}`, width);
+
       return [line, middle, line];
     },
     invalidate(): void {},
@@ -172,6 +182,12 @@ export default function (pi: ExtensionAPI): void {
   });
 
   pi.on("session_fork", async (_event, ctx) => {
+    ensureSessionName(pi, ctx);
+    setSessionBanner(pi, ctx);
+  });
+
+  pi.on("message_start", async (event, ctx) => {
+    if (event.message.role !== "user") return;
     ensureSessionName(pi, ctx);
     setSessionBanner(pi, ctx);
   });
