@@ -23,7 +23,7 @@ function parseColor(input: string | undefined, fallback: BannerColor): BannerCol
 
 const BANNER_CONFIG = {
   emojiOverride: process.env.PI_SESSION_BANNER_EMOJI?.trim(),
-  frameColor: parseColor(process.env.PI_SESSION_BANNER_FRAME_COLOR, "accent"),
+  frameColor: parseColor(process.env.PI_SESSION_BANNER_FRAME_COLOR, "muted"),
   titleColor: parseColor(process.env.PI_SESSION_BANNER_TITLE_COLOR, "mdLink"),
 };
 
