@@ -1,5 +1,4 @@
 import type { ExtensionAPI, ExtensionContext } from "@mariozechner/pi-coding-agent";
-import { basename } from "node:path";
 
 type BannerColor = "text" | "accent" | "muted" | "dim" | "success" | "warning" | "error" | "mdLink" | "syntaxType";
 
@@ -27,15 +26,60 @@ const BANNER_CONFIG = {
   titleColor: parseColor(process.env.PI_SESSION_BANNER_TITLE_COLOR, "mdLink"),
 };
 
-function normalizeTitle(text: string, maxLen = 64): string {
+function summarizeTitle(text: string, maxWords = 7, maxLen = 64): string {
   const cleaned = text
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`[^`]*`/g, " ")
+    .replace(/https?:\/\/\S+/g, " ")
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, "$1")
     .replace(/\s+/g, " ")
     .replace(/^[-*#>\s]+/, "")
     .trim();
 
   if (!cleaned) return "untitled session";
-  if (cleaned.length <= maxLen) return cleaned;
-  return `${cleaned.slice(0, maxLen - 1).trimEnd()}…`;
+
+  let candidate = cleaned
+    .split(/[\n.!?]+/)
+    .map((s) => s.trim())
+    .find(Boolean) ?? cleaned;
+
+  candidate = candidate
+    .replace(/^(please\s+)?(can|could|would|will)\s+you\s+/i, "")
+    .replace(/^(help\s+me\s+)?(to\s+)?/i, "")
+    .replace(/^(i\s+(need|want|am trying)\s+(you\s+)?to\s+)/i, "")
+    .replace(/\b(instead of|so that|because|thanks|thank you)\b[\s\S]*$/i, "")
+    .replace(/^to\s+/i, "")
+    .trim();
+
+  const rawTokens = candidate.match(/[A-Za-z0-9][A-Za-z0-9._/-]*/g) ?? [];
+  const stopwords = new Set([
+    "a", "an", "and", "the", "this", "that", "these", "those", "for", "from", "with", "without", "into", "onto",
+    "in", "on", "at", "by", "of", "to", "is", "are", "be", "been", "being", "it", "its", "as", "or", "if", "then",
+    "just", "exactly", "main", "idea", "few", "words", "show", "use", "using", "make", "please", "can", "could", "would",
+    "will", "you", "me", "my", "your", "our", "we", "i",
+  ]);
+
+  const actionVerbs = new Set([
+    "add", "update", "fix", "refactor", "create", "remove", "rename", "improve", "optimize", "document", "test", "implement",
+    "build", "generate", "summarize", "capture", "support", "enable", "disable", "show", "hide",
+  ]);
+
+  const tokens: string[] = [];
+  for (let i = 0; i < rawTokens.length; i++) {
+    const token = rawTokens[i];
+    const lower = token.toLowerCase();
+    const keep = i === 0 || actionVerbs.has(lower) || !stopwords.has(lower) || /[./_-]/.test(token);
+    if (!keep) continue;
+    tokens.push(token);
+    if (tokens.length >= maxWords) break;
+  }
+
+  let title = tokens.join(" ").trim();
+  if (!title) title = candidate;
+  if (!title) title = "untitled session";
+
+  if (title.length <= maxLen) return title;
+  return `${title.slice(0, maxLen - 1).trimEnd()}…`;
 }
 
 function extractUserText(ctx: ExtensionContext): string | undefined {
@@ -61,20 +105,17 @@ function ensureSessionName(pi: ExtensionAPI, ctx: ExtensionContext): void {
   const userText = extractUserText(ctx);
   if (!userText) return;
 
-  pi.setSessionName(normalizeTitle(userText));
+  pi.setSessionName(summarizeTitle(userText));
 }
 
-function getSessionTitle(pi: ExtensionAPI, ctx: ExtensionContext): string {
+function getSessionTitle(pi: ExtensionAPI, ctx: ExtensionContext): string | undefined {
   const explicitName = pi.getSessionName()?.trim();
   if (explicitName) return explicitName;
 
   const userText = extractUserText(ctx);
-  if (userText) return normalizeTitle(userText);
+  if (userText) return summarizeTitle(userText);
 
-  const sessionFile = ctx.sessionManager.getSessionFile();
-  if (sessionFile) return basename(sessionFile);
-
-  return "ephemeral session";
+  return undefined;
 }
 
 function pickEmojiFromTitle(title: string): string {
@@ -99,9 +140,14 @@ function pickEmojiFromTitle(title: string): string {
 }
 
 function setSessionBanner(pi: ExtensionAPI, ctx: ExtensionContext): void {
+  const title = getSessionTitle(pi, ctx);
+  if (!title) {
+    ctx.ui.setWidget("session-banner", undefined);
+    return;
+  }
+
   ctx.ui.setWidget("session-banner", (_tui, theme) => ({
     render(width: number): string[] {
-      const title = getSessionTitle(pi, ctx);
       const plainLine = "─".repeat(Math.max(0, width));
       const line = theme.fg(BANNER_CONFIG.frameColor, plainLine);
       const divider = theme.fg(BANNER_CONFIG.frameColor, "│");

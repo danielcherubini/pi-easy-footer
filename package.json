@@ -4,7 +4,7 @@
   "description": "A theme and footer enhancement pack for pi",
   "type": "module",
   "files": [
-    "extensions",
+    ".pi",
     "themes",
     "README.md",
     "LICENSE"
@@ -42,7 +42,8 @@
   },
   "pi": {
     "extensions": [
-      "./extensions/footer.ts"
+      "./extensions/footer/index.ts",
+      "./extensions/session-banner/index.ts"
     ],
     "themes": [
       "./themes"
