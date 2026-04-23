@@ -63,10 +63,10 @@ export function formatThinkingIndicator(thinkingLevel: string, colorize: ColorFn
 }
 
 export function formatContextBar(colorize: ColorFn, percentValue: number, availableSpace: number): string {
-  if (percentValue <= 0 || availableSpace <= 2) return "";
+  if (availableSpace <= 2) return "";
 
   const pct = Math.min(1, percentValue / 100);
-  const filledLength = Math.max(1, Math.round(pct * availableSpace));
+  const filledLength = percentValue > 0 ? Math.max(1, Math.round(pct * availableSpace)) : 0;
   const emptyLength = availableSpace - filledLength;
   const bar = "━".repeat(filledLength) + "─".repeat(emptyLength);
   const barToken = pct >= 0.9 ? "error" : pct >= 0.7 ? "warning" : "syntaxString";
