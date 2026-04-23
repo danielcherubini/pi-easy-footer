@@ -71,7 +71,7 @@ export default function(pi: ExtensionAPI) {
             const contextDisplay =
               contextPercent === "?"
                 ? "?"
-                : formatTokenCount(contextUsed) + "/" + formatTokenCount(contextWindowSize);
+                : formatTokenCount(contextUsed * (contextPercentValue / 100)) + "/" + formatTokenCount(contextWindowSize);
             const contextColored =
               contextPercentValue > 90
                 ? theme.fg("error", contextDisplay)
