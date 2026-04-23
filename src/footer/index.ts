@@ -67,11 +67,11 @@ export default function(pi: ExtensionAPI) {
             if (totalCacheWrite) statsParts.push("W" + formatTokenCount(totalCacheWrite));
             if (totalCost) statsParts.push("$" + totalCost.toFixed(2));
 
-            const contextUsed = totalInput + totalOutput;
+            const contextUsed = contextWindowSize * (contextPercentValue / 100);
             const contextDisplay =
               contextPercent === "?"
                 ? "?"
-                : formatTokenCount(contextUsed * (contextPercentValue / 100)) + "/" + formatTokenCount(contextWindowSize);
+                : formatTokenCount(contextUsed) + "/" + formatTokenCount(contextWindowSize);
             const contextColored =
               contextPercentValue > 90
                 ? theme.fg("error", contextDisplay)
