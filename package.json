@@ -1,33 +1,31 @@
 {
-  "name": "@haispeed/pi-deck",
+  "name": "pi-easy-footer",
   "version": "0.1.5",
-  "description": "A theme and footer enhancement pack for pi",
+  "description": "A footer extension and session banner for pi",
   "type": "module",
+  "main": "./src/footer/index.ts",
+  "exports": {
+    ".": "./src/footer/index.ts"
+  },
   "files": [
-    "extensions",
-    "themes",
-    "README.md",
-    "LICENSE"
+    "src"
   ],
   "keywords": [
     "pi-package",
     "pi",
     "pi-extension",
-    "pi-theme",
     "footer",
-    "statusline",
-    "kanagawa",
-    "kanso"
+    "statusline"
   ],
   "author": "hai",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hisea/pi-deck.git"
+    "url": "git+https://github.com/danielcherubini/pi-easy-footer.git"
   },
-  "homepage": "https://github.com/hisea/pi-deck#readme",
+  "homepage": "https://github.com/danielcherubini/pi-easy-footer#readme",
   "bugs": {
-    "url": "https://github.com/hisea/pi-deck/issues"
+    "url": "https://github.com/danielcherubini/pi-easy-footer/issues"
   },
   "engines": {
     "node": ">=24.0.0"
@@ -42,11 +40,8 @@
   },
   "pi": {
     "extensions": [
-      "./extensions/footer/index.ts",
-      "./extensions/session-banner/index.ts"
-    ],
-    "themes": [
-      "./themes"
+      "./src/footer/index.ts",
+      "./src/session-banner/index.ts"
     ]
   }
 }
