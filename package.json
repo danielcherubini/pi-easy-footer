@@ -1,6 +1,6 @@
 {
   "name": "pi-easy-footer",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A footer extension and session banner for pi",
   "type": "module",
   "main": "./src/footer/index.ts",
