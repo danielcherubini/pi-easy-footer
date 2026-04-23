@@ -9,14 +9,14 @@ import { getGitStatus, getWorktreeBranch } from "./utils/git.js";
 import { getContextWindowInfo, getTokenUsageStats } from "./utils/stats.js";
 import { formatContextBar, formatGitStatusIndicators, formatThinkingIndicator, footerIcons, formatTokenCount } from "./utils/formatting.js";
 
-export default function (pi: ExtensionAPI) {
+export default function(pi: ExtensionAPI) {
   pi.on("session_start", (_event, ctx) => {
     ctx.ui.setFooter((tui, theme, footerData) => {
       const unsubscribe = footerData.onBranchChange(() => tui.requestRender());
 
       return {
         dispose: unsubscribe,
-        invalidate() {},
+        invalidate() { },
         render(width: number): string[] {
           try {
             // Theme color helper
@@ -89,7 +89,7 @@ export default function (pi: ExtensionAPI) {
             // Calculate available space for the context progress bar (after stats)
             const availableBarSpace = Math.max(
               2,
-              width - visibleWidth(leftSectionStr) - 1 - visibleWidth(sectionSeparator) - visibleWidth(statsSectionStr) - 9,
+              width - visibleWidth(leftSectionStr) - 1 - visibleWidth(sectionSeparator) - visibleWidth(statsSectionStr) - 10,
             );
 
             // Context progress bar (expands to fill remaining space)
