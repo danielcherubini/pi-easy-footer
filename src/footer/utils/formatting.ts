@@ -68,8 +68,12 @@ export function formatContextBar(colorize: ColorFn, percentValue: number, availa
   const pct = Math.min(1, percentValue / 100);
   const filledLength = percentValue > 0 ? Math.max(1, Math.round(pct * availableSpace)) : 0;
   const emptyLength = availableSpace - filledLength;
-  const bar = "━".repeat(filledLength) + "─".repeat(emptyLength);
+
   const barToken = pct >= 0.9 ? "error" : pct >= 0.7 ? "warning" : "syntaxString";
 
-  return colorize(barToken, footerIcons.contextWindow + " " + bar + " " + Math.round(percentValue) + "%");
+  const filledBar = filledLength > 0 ? colorize(barToken, "━".repeat(filledLength)) : "";
+  const emptyBar = emptyLength > 0 ? colorize("dim", "━".repeat(emptyLength)) : "";
+  const bar = filledBar + emptyBar;
+
+  return colorize(barToken, footerIcons.contextWindow) + "  " + bar + " " + colorize(barToken, Math.round(percentValue) + "%");
 }

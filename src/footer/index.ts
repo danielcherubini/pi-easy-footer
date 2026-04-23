@@ -47,11 +47,12 @@ export default function (pi: ExtensionAPI) {
             // Git status indicators
             const gitStatusStr = formatGitStatusIndicators(gitStatus, colorize);
 
-            // Left section: dir | branch [+status] | model
+            // Left section: dir | branch [+status] | model | thinking
             const leftSections = [
               colorize("syntaxFunction", " " + footerIcons.directory + currentDirectory),
               currentBranch ? colorize("success", footerIcons.branch + " " + currentBranch + (gitStatusStr ? " " + gitStatusStr : "")) : "",
               colorize("syntaxType", footerIcons.model + " " + activeModel),
+              thinkingIndicatorStr,
               worktreeBranch ? colorize("syntaxNumber", footerIcons.worktree + " " + worktreeBranch) : "",
             ].filter(Boolean);
 
@@ -88,17 +89,16 @@ export default function (pi: ExtensionAPI) {
             // Calculate available space for the context progress bar (after stats)
             const availableBarSpace = Math.max(
               2,
-              width - visibleWidth(leftSectionStr) - 1 - visibleWidth(sectionSeparator) - visibleWidth(statsSectionStr) - visibleWidth(thinkingIndicatorStr) - 9,
+              width - visibleWidth(leftSectionStr) - 1 - visibleWidth(sectionSeparator) - visibleWidth(statsSectionStr) - 9,
             );
 
             // Context progress bar (expands to fill remaining space)
             const contextBarStr = formatContextBar(colorize, contextPercentValue, availableBarSpace);
 
-            // Assemble: left | stats | bar | thinking
+            // Assemble: left | stats | bar
             const rightSections: string[] = [];
             if (statsSectionStr) rightSections.push(statsSectionStr);
             if (contextBarStr) rightSections.push(contextBarStr);
-            if (thinkingIndicatorStr) rightSections.push(thinkingIndicatorStr);
             const rightSectionStr = rightSections.join(theme.fg("dim", " | "));
 
             return [truncateToWidth(leftSectionStr + sectionSeparator + rightSectionStr, width)];
